@@ -1,0 +1,65 @@
+import React, { useState } from "react";
+function App() {
+const questions = [
+{
+question: "What is the capital of France?",
+options: ["Paris", "London", "Rome", "Berlin"],
+answer: "Paris",
+},
+{
+question: "Which planet is known as the Red Planet?",
+options: ["Earth", "Mars", "Jupiter", "Venus"],
+answer: "Mars",
+},
+{
+question: "Which language is used for web apps?",
+options: ["Python", "JavaScript", "C++", "Java"],
+answer: "JavaScript",
+},
+];
+const [currentQuestion, setCurrentQuestion] = useState(0);
+const [score, setScore] = useState(0);
+const [showScore, setShowScore] = useState(false);
+const handleAnswer = (option) => {
+if (option === questions[currentQuestion].answer) {
+setScore(score + 1);
+}
+const nextQuestion = currentQuestion + 1;
+if (nextQuestion < questions.length) {
+setCurrentQuestion(nextQuestion);
+} else {
+setShowScore(true);
+}
+};
+return (
+<div style={{ padding: 20, fontFamily: "system-ui" }}>
+<h2>📝 Simple React Quiz</h2>
+{showScore ? (
+<div>
+<h3>
+Your Score: {score} / {questions.length}
+</h3>
+</div>
+) : (
+<div>
+<h3>
+Question {currentQuestion + 1} of {questions.length}
+</h3>
+<p>{questions[currentQuestion].question}</p>
+<div>
+{questions[currentQuestion].options.map((option, index) => (
+<button
+key={index}
+onClick={() => handleAnswer(option)}
+style={{ margin: 5 }}
+>
+{option}
+</button>
+))}
+</div>
+</div>
+)}
+</div>
+);
+}
+export default App;
